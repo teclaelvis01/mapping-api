@@ -19,8 +19,8 @@ class AnosSegTag extends BaseTag
         $dateFrom = $this->data['prevInsurance_contractDate'] ?? null;
         $dateTo = $this->data['prevInsurance_expirationDate'] ?? null;
         if(isset($dateFrom) && $this->strIsDate($dateFrom) && isset($dateTo) && $this->strIsDate($dateTo)) {
-            $yearFrom = (new \DateTime($dateFrom))->y;
-            $yearTo = (new \DateTime($dateTo))->y;
+            $yearFrom = (new \DateTime($dateFrom))->format('Y');
+            $yearTo = (new \DateTime($dateTo))->format('Y');
             $years = range($yearFrom, $yearTo);
             
             $this->item[$this->tagName] = count($years) > 0 ? count($years) - 1 : 0;

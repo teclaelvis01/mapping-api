@@ -19,7 +19,8 @@ abstract class BaseReader
     
     /**
      * validateFileExist
-     * @return $this 
+     * @return true|Exception 
+     *  
      * @throws Exception 
      */
     public function validateFileExist()
@@ -27,6 +28,6 @@ abstract class BaseReader
         if (!file_exists($this->filePath)) {
             throw new \Exception('[BaseReader] File not found with path ' . $this->filePath);
         }
-        return $this;
+        return true;
     }
 }

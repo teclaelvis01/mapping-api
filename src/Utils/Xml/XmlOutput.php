@@ -25,6 +25,16 @@ class XmlOutput
         $this->content .= $this->converter($this->data);
         return $this->content;
     }
+    // conver xmlStr format to string plain text
+    static public function getPlainText($xmlStr): string
+    {
+        // xmlStr remove all empty lines
+        $xmlStr = preg_replace('/\s+/', '', $xmlStr);
+        $xmlStr = preg_replace('/\n+/', '', $xmlStr);
+        
+        return $xmlStr;
+    }
+
 
 
 
