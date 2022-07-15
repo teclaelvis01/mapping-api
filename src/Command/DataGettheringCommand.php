@@ -3,7 +3,15 @@
 namespace App\Command;
 
 use App\Integrations\FooInsuranceApi;
+use App\Utils\Mappings\AnosSegTag;
+use App\Utils\Mappings\CondPpalTag;
+use App\Utils\Mappings\CondUniTag;
+use App\Utils\Mappings\FecCotTag;
+use App\Utils\Mappings\Mapper;
+use App\Utils\Mappings\NroCondOcaTag;
+use App\Utils\Mappings\SegVigTag;
 use App\Utils\Reader\ReaderCsv;
+use App\Utils\Xml\XmlOutput;
 use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Attribute\AsCommand;
 use Symfony\Component\Console\Input\InputArgument;
@@ -43,10 +51,12 @@ class DataGettheringCommand extends Command
         try {
             //code...
             $pathFile = $input->getArgument('pathfile');
-            $output->writeln('The paht of the csv file is: '.$pathFile);
-            $fooApi = new FooInsuranceApi(new ReaderCsv($pathFile));
-            $result = $fooApi->excecute();
-            $output->writeln('The data of the csv file is: '.json_encode($result));
+            $reader = new ReaderCsv($pathFile);
+            $reader->validateFileExist();
+            $dataIput = $reader->readFile();
+
+            $fooApi = new FooInsuranceApi($dataIput);
+            $output->writeln($fooApi->responseAsString());
 
             
             $output->writeln('The xml generate is: ');

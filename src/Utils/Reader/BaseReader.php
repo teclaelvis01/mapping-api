@@ -1,6 +1,7 @@
 <?php
 namespace App\Utils\Reader;
 
+use Exception;
 
 abstract class BaseReader
 {
@@ -16,11 +17,16 @@ abstract class BaseReader
     }
     abstract public function readFile(): array;
     
-    public function validateFile(): bool
+    /**
+     * validateFileExist
+     * @return $this 
+     * @throws Exception 
+     */
+    public function validateFileExist()
     {
         if (!file_exists($this->filePath)) {
             throw new \Exception('[BaseReader] File not found with path ' . $this->filePath);
         }
-        return true;
+        return $this;
     }
 }
